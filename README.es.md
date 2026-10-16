@@ -6,6 +6,9 @@
 [![Graphics](https://img.shields.io/badge/Graphics-SDL2%20Hardware%20Accelerated-green.svg)](https://www.libsdl.org/)
 [![Audio](https://img.shields.io/badge/Audio-DirectSound%20Shim%20%2F%20SDL2%20Audio-purple.svg)](https://www.libsdl.org/)
 [![License](https://img.shields.io/badge/License-GPLv3%20con%20t%C3%A9rminos%20adicionales-lightgrey.svg)](LICENSE.md)
+[![Language: English](https://img.shields.io/badge/Language-English-blue.svg)](README.md)
+
+> 📖 *Read in [English](README.md)*
 
 Port nativo de alto rendimiento del mítico juego de estrategia en tiempo real **Command & Conquer: Red Alert (Westwood Studios, 1996)**, ejecutándose directamente sobre **iPadOS (iPad)**.
 
@@ -127,8 +130,8 @@ Asegúrate de tener instalado **Xcode completo** desde el Mac App Store (no solo
 
 1. **Monta las dos imágenes de disco** haciendo doble clic sobre ellas en Finder o desde la terminal:
    ```bash
-   hdiutil mount /ruta/a/CD1_ALLIED_DISC.ISO
-   hdiutil mount /ruta/a/CD2_SOVIET_DISC.ISO
+   hdiutil mount /ruta/a/CD1_ALLIED_DISC.ISO (o arrastra el archivo ISO a la ventana de la terminal)
+   hdiutil mount /ruta/a/CD2_SOVIET_DISC.ISO (o arrastra el archivo ISO a la ventana de la terminal)
    ```
    *(Aparecerán montadas en `/Volumes/CD1` o `/Volumes/REDALERT` y `/Volumes/CD2`).*
 
@@ -149,19 +152,21 @@ Asegúrate de tener instalado **Xcode completo** desde el Mac App Store (no solo
 
 ---
 
-### Paso 6: Instalar en tu iPad
+### Paso 4: Instalar en tu iPad
 
 Puedes compilar e instalar el juego usando una **cuenta gratuita de Apple ID** (no es necesaria la suscripción anual de \$99/año).
 
 1. **Obtén tu Apple Development Team ID**:
-   * En Xcode: Abre **Settings** (`Cmd + ,`) $\rightarrow$ pestaña **Accounts** $\rightarrow$ selecciona tu Apple ID $\rightarrow$ **Manage Certificates** (tu Team ID de 10 caracteres alfanuméricos aparece junto a tu nombre).
-   * O consúltalo en [developer.apple.com/account](https://developer.apple.com/account).
+   * En [developer.apple.com/account](https://developer.apple.com/account), busca tu Team ID (un identificador de 10 caracteres).
 
 2. **Compila la versión optimizada Release para dispositivo**:
+   Los identificadores de app (*Bundle Identifier*) deben ser globalmente únicos en Apple. Especifica tu Team ID y un identificador único propio (por ejemplo, con tu nombre o usuario):
    ```bash
-   RA_IOS_DEVELOPMENT_TEAM=TU_TEAM_ID scripts/build_ios_debug.sh --device --release
+   RA_IOS_DEVELOPMENT_TEAM=TU_TEAM_ID RA_IOS_BUNDLE_IDENTIFIER="com.tu_nombre.redalert" scripts/build_ios_debug.sh --device --release
    ```
-   *(Sustituye `TU_TEAM_ID` por tu Team ID).*
+   *(Sustituye `TU_TEAM_ID` por tu Team ID y `tu_nombre` por tu identificador).*
+
+   Tardará un rato, ve a prepararte un café.
 
 3. **Instalar en el iPad con Xcode**:
    * Conecta tu iPad al Mac mediante cable USB y pulsa **Confiar en este ordenador** en la pantalla del iPad.
