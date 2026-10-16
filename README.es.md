@@ -1,4 +1,4 @@
-# 🪖 Command & Conquer: Red Alert (1996) — Port Nativo para iPadOS, macOS y Linux
+# 🪖 Command & Conquer: Red Alert (1996) — Port Nativo para iPadOS
 
 [![Platform](https://img.shields.io/badge/Platform-iPadOS%2016%2B%20%7C%20macOS%2012%2B%20%7C%20Linux%20%7C%20Android-blue.svg)](https://github.com/MargeLenders/redalert-ipad)
 [![Architecture](https://img.shields.io/badge/Architecture-ARM64%20(Apple%20Silicon)%20%7C%20x86__64-orange.svg)](https://github.com/MargeLenders/redalert-ipad)
@@ -7,7 +7,7 @@
 [![Audio](https://img.shields.io/badge/Audio-DirectSound%20Shim%20%2F%20SDL2%20Audio-purple.svg)](https://www.libsdl.org/)
 [![License](https://img.shields.io/badge/License-GPLv3%20con%20t%C3%A9rminos%20adicionales-lightgrey.svg)](LICENSE.md)
 
-Port nativo de alto rendimiento del mítico juego de estrategia en tiempo real **Command & Conquer: Red Alert (Westwood Studios, 1996)**, ejecutándose directamente sobre **iPadOS (iPad), macOS (Apple Silicon e Intel), Linux (Ubuntu) y Android**.
+Port nativo de alto rendimiento del mítico juego de estrategia en tiempo real **Command & Conquer: Red Alert (Westwood Studios, 1996)**, ejecutándose directamente sobre **iPadOS (iPad)**.
 
 Este proyecto es un fork de [`dk8827/ra-port`](https://github.com/dk8827/ra-port), el cual modernizó la base de código original en C++ liberada por Electronic Arts bajo licencia GPLv3 (<https://github.com/electronicarts/CnC_Red_Alert>).
 
@@ -22,7 +22,7 @@ Este fork transforma el port en una experiencia táctil de primer nivel con **so
   * **Arrastre con 1 dedo (Selección en caja)**: Caja de selección verde (*rubber-band*) para seleccionar múltiples unidades a la vez.
   * **Toque con 2 dedos**: Clic derecho nativo (cancelar órdenes de movimiento, deseleccionar, abortar colocación de edificios o activar vender/reparar).
   * **Arrastre con 2 dedos**: Desplazamiento suave de la cámara por el mapa en cualquier dirección.
-  * **HUD Táctil Retro Auténtico (Esquina inferior izquierda)**:
+  * **HUD Táctil Retro Auténtico (Lateral izquierdo de la pantalla)**:
     * **`CTRL` (Ataque Forzado)**: Activa/desactiva el modo de disparo forzado contra el suelo, puentes o unidades aliadas. Incorpora un indicador ámbar iluminado cuando está activo.
     * **`1`, `2`, `3`, `4` (Grupos de Combate)**: Un toque selecciona el grupo asignado (doble toque centra la cámara en él). Mantener pulsado (400ms) asigna las unidades seleccionadas a ese grupo (igual que `Ctrl + 1..4` en PC), confirmado con un LED verde.
     * **`KEY` (Teclado Virtual)**: Muestra u oculta el teclado en pantalla del sistema para escribir nombres de partidas guardadas o códigos.
@@ -46,8 +46,6 @@ Este fork transforma el port en una experiencia táctil de primer nivel con **so
 ┌────────────────────────────────────────────────────────┐
 │             Capa Anfitrión (Host)                      │
 │   • iPadOS: UIKit, UIScene, orientación landscape fija │
-│   • macOS: Ventana nativa Cocoa / AppKit               │
-│   • Linux: Entorno de escritorio X11 / Wayland         │
 └──────────────────────────┬─────────────────────────────┘
                            │
                            ▼
@@ -95,7 +93,7 @@ En 2008, Electronic Arts liberó oficialmente Command & Conquer: Red Alert como 
 
 ---
 
-## 🚀 Tutorial Paso a Paso: De Cero a Jugar en iPad y Mac
+## 🚀 Tutorial Paso a Paso: De Cero a Jugar en iPad
 
 Sigue estos sencillos pasos para compilar e instalar el juego:
 
@@ -151,36 +149,7 @@ Asegúrate de tener instalado **Xcode completo** desde el Mac App Store (no solo
 
 ---
 
-### Paso 4: Compilar y Jugar Nativamente en macOS
-
-```bash
-# Configurar y compilar con Ninja
-cmake -S . -B build -G Ninja
-cmake --build build --target redalert_mac -j 8
-
-# Lanzar el juego
-scripts/run_mac_dev.sh --no-build
-```
-
-* **Atajo de pantalla completa**: Pulsa `Cmd + Enter` durante la partida, o arranca con `RA_FULLSCREEN=1 scripts/run_mac_dev.sh`.
-
----
-
-### Paso 5: Probar en el Simulador de iOS
-
-Para probar los controles táctiles en tu Mac sin necesidad de conectar un dispositivo:
-
-```bash
-# Compilar para el simulador
-scripts/build_ios_debug.sh
-
-# Arrancar el simulador en horizontal y lanzar Red Alert
-scripts/run_ios_simulator.sh --no-build
-```
-
----
-
-### Paso 6: Instalar en tu iPad o iPhone Real
+### Paso 6: Instalar en tu iPad
 
 Puedes compilar e instalar el juego usando una **cuenta gratuita de Apple ID** (no es necesaria la suscripción anual de \$99/año).
 
@@ -224,37 +193,6 @@ Puedes compilar e instalar el juego usando una **cuenta gratuita de Apple ID** (
 | **HUD: `KEY`** | **Teclado Virtual** | Muestra el teclado en pantalla del sistema para escribir nombres o códigos. |
 | **HUD: `▲` / `▼`** | **Minimizar HUD** | Pliega el dock a un botón de esquina para despejar el campo de visión. |
 | **Ratón / Trackpad** | **Puntero de Escritorio** | Compatible de forma transparente con ratones, Magic Keyboards y trackpads Bluetooth. |
-
----
-
-## 🐧 Configuración en Linux Desktop (Ubuntu)
-
-```bash
-# 1. Instalar dependencias
-sudo apt-get update
-sudo apt-get install -y build-essential cmake ninja-build pkg-config libsdl2-dev
-
-# 2. Compilar ejecutable
-cmake -S . -B build-linux -G Ninja
-cmake --build build-linux --target redalert_linux -j 8
-
-# 3. Preparar assets con las ISOs montadas
-scripts/prepare_assets_from_local.sh --allies /tmp/allies --soviet /tmp/soviet
-
-# 4. Ejecutar
-scripts/run_linux_dev.sh --no-build
-```
-
----
-
-## 🤖 Configuración en Android
-
-1. Instala Android Studio con NDK `28.2.13676358` y las platform-tools (`adb`).
-2. Compila y ejecuta:
-   ```bash
-   scripts/build_android_debug.sh
-   scripts/run_android_debug.sh --no-build
-   ```
 
 ---
 
