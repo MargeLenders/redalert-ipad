@@ -25,7 +25,7 @@ This fork extends the port into a first-class tablet experience with **native iP
   * **1-Finger Drag (Rubber-Band)**: Box-select multiple combat units simultaneously with a visual green selector rectangle.
   * **2-Finger Tap**: Native Right-Click (cancel movement orders, deselect units, abort building placement, or toggle sell/repair mode).
   * **2-Finger Drag**: Smooth battlefield camera panning in any direction.
-  * **Authentic 1996 Tactical HUD Dock (leafy side of the screen)**:
+  * **Authentic 1996 Tactical HUD Dock (left side of the screen)**:
     * **`CTRL` (Force Attack)**: Toggle force-attack mode to target ground, bridges, or friendly units. Features an active amber indicator lamp.
     * **`1`, `2`, `3`, `4` (Combat Teams)**: Quick-tap to select assigned combat groups (double-tap centers the camera). Long-press (400ms) assigns selected units to that group (like desktop `Ctrl + 1..4`), verified with a green LED indicator.
     * **`KEY` (Virtual Keyboard)**: Toggles the system on-screen keyboard for text input, saves, and cheats.
@@ -160,14 +160,15 @@ You can install and run the game using a **free personal Apple ID** (no paid \$9
    * At [developer.apple.com/account](https://developer.apple.com/account), look for Team ID (a 10-character Team ID).
 
 2. **Compile the optimized Release build for device**:
+   App bundle identifiers must be globally unique across Apple. Specify your Team ID and your own unique identifier (e.g., using your name or handle):
    ```bash
-   RA_IOS_DEVELOPMENT_TEAM=YOUR_TEAM_ID scripts/build_ios_debug.sh --device --release
+   RA_IOS_DEVELOPMENT_TEAM=YOUR_TEAM_ID RA_IOS_BUNDLE_IDENTIFIER="com.yourname.redalert" scripts/build_ios_debug.sh --device --release
    ```
-   *(Replace `YOUR_TEAM_ID` with your 10-character Team ID).*
+   *(Replace `YOUR_TEAM_ID` with your 10-character Team ID and `yourname` with your handle).*
 
    It will take a while, go grab a coffee.
 
-4. **Deploy with Xcode**:
+3. **Deploy with Xcode**:
    * Connect your iPad to your Mac via USB and tap **Trust This Computer** on the iPad screen.
    * Open the generated Xcode project:
      ```bash
@@ -176,7 +177,7 @@ You can install and run the game using a **free personal Apple ID** (no paid \$9
    * In Xcode's top toolbar, select your connected iPad as the run destination.
    * Press **Run** (`Cmd + R`). Xcode will sign the app, embed the prepared game data, and install it on your iPad.
 
-5. **Enable Developer Mode & Trust Certificate on iPad**:
+4. **Enable Developer Mode & Trust Certificate on iPad**:
    * On iPadOS 16/17+: Go to **Settings $\rightarrow$ Privacy & Security $\rightarrow$ Developer Mode**, turn it **On**, and reboot the iPad.
    * Go to **Settings $\rightarrow$ General $\rightarrow$ VPN & Device Management**, tap your Apple ID under *Developer App*, and tap **Trust**.
    * Launch **Red Alert** from your iPad home screen and enjoy!
