@@ -1,0 +1,149 @@
+/*
+ * Copyright 2025 Electronic Arts Inc.
+ *
+ * Derived from Electronic Arts Inc.'s public source release for
+ * Command & Conquer: Red Alert.
+ * Licensed under GPLv3-or-later with additional Electronic Arts terms.
+ * Modified for the macOS port, 2026.
+ * See LICENSE.md.
+ */
+
+#ifndef TARGET_H
+#define TARGET_H
+
+
+inline RTTIType Target_Kind(TARGET a)
+{
+	return(RTTIType(((TARGET_COMPOSITE &)a).Sub.Exponent));
+}
+
+inline unsigned Target_Value(TARGET a)
+{
+	return(((TARGET_COMPOSITE &)a).Sub.Mantissa);
+}
+
+inline bool Is_Target_Team(TARGET a) {return (Target_Kind(a) == RTTI_TEAM);}
+inline bool Is_Target_TeamType(TARGET a) {return (Target_Kind(a) == RTTI_TEAMTYPE);}
+inline bool Is_Target_Trigger(TARGET a) {return (Target_Kind(a) == RTTI_TRIGGER);}
+inline bool Is_Target_TriggerType(TARGET a) {return (Target_Kind(a) == RTTI_TRIGGERTYPE);}
+inline bool Is_Target_Infantry(TARGET a) {return (Target_Kind(a) == RTTI_INFANTRY);}
+inline bool Is_Target_Bullet(TARGET a) {return (Target_Kind(a) == RTTI_BULLET);}
+inline bool Is_Target_Terrain(TARGET a) {return (Target_Kind(a) == RTTI_TERRAIN);}
+inline bool Is_Target_Cell(TARGET a) {return (Target_Kind(a) == RTTI_CELL);}
+inline bool Is_Target_Unit(TARGET a) {return (Target_Kind(a) == RTTI_UNIT);}
+inline bool Is_Target_Vessel(TARGET a) {return (Target_Kind(a) == RTTI_VESSEL);}
+inline bool Is_Target_Building(TARGET a) {return (Target_Kind(a) == RTTI_BUILDING);}
+inline bool Is_Target_Template(TARGET a) {return (Target_Kind(a) == RTTI_TEMPLATE);}
+inline bool Is_Target_Aircraft(TARGET a) {return (Target_Kind(a) == RTTI_AIRCRAFT);}
+inline bool Is_Target_Animation(TARGET a) {return (Target_Kind(a) == RTTI_ANIM);}
+inline bool Is_Target_Object(TARGET a)
+{
+	return (Target_Kind(a) == RTTI_TERRAIN ||
+			Target_Kind(a) == RTTI_UNIT ||
+			Target_Kind(a) == RTTI_VESSEL ||
+			Target_Kind(a) == RTTI_INFANTRY ||
+			Target_Kind(a) == RTTI_BUILDING ||
+			Target_Kind(a) == RTTI_AIRCRAFT);
+}
+
+
+TARGET As_Target(CELL cell);
+TARGET As_Target(COORDINATE coord);
+//inline TARGET As_Target(CELL cell) {return (TARGET)(((unsigned)RTTI_CELL << TARGET_MANTISSA) | cell);}
+
+class UnitClass;
+class BuildingClass;
+class TechnoClass;
+class TerrainClass;
+class ObjectClass;
+class InfantryClass;
+class BulletClass;
+class TriggerClass;
+class TeamClass;
+class TeamTypeClass;
+class AnimClass;
+class AircraftClass;
+class VesselClass;
+class CellClass;
+class TriggerTypeClass;
+
+/*
+** Must not have a constructor since Watcom cannot handle a class that has a constructor if
+** that class object is in a union. Don't use this class for normal purposes. Use the TargetClass
+**	instead. The xTargetClass is only used in one module for a special reason -- keep it that way.
+*/
+class xTargetClass
+{
+	protected:
+
+		TARGET_COMPOSITE Target;
+
+	public:
+
+		// conversion operator to RTTIType
+		operator RTTIType (void) const {return(RTTIType(Target.Sub.Exponent));}
+
+		// comparison operator
+		int operator == (xTargetClass & tgt) {return (tgt.Target.Target==Target.Target ? 1 : 0);}
+
+		// conversion operator to regular TARGET type
+		TARGET As_TARGET(void) const {return(Target.Target);}
+
+		unsigned Value(void) const {return(Target.Sub.Mantissa);};
+
+		void Invalidate(void) {Target.Sub.Exponent = RTTI_NONE;Target.Sub.Mantissa = -1;}
+		bool Is_Valid(void) const {return (Target.Sub.Exponent != RTTI_NONE);}
+
+		TARGET As_Target(void) const {return(Target.Target);}
+		AbstractTypeClass * As_TypeClass(void) const;
+		AbstractClass * As_Abstract(void) const;
+		TechnoClass * As_Techno(void) const;
+		ObjectClass * As_Object(void) const;
+		CellClass * As_Cell(void) const;
+
+		/*
+		**	Helper routines to combine testing for, and fetching a pointer to, the
+		**	type of object indicated.
+		*/
+		TriggerTypeClass * As_TriggerType(void) const {if (*this == RTTI_TRIGGERTYPE) return((TriggerTypeClass *)As_TypeClass());return(0);}
+		TeamTypeClass * As_TeamType(void) const {if (*this == RTTI_TEAMTYPE) return((TeamTypeClass *)As_TypeClass());return(0);}
+		TerrainClass * As_Terrain(void) const {if (*this == RTTI_TERRAIN) return((TerrainClass *)As_Abstract());return(0);}
+		BulletClass * As_Bullet(void) const {if (*this == RTTI_BULLET) return((BulletClass *)As_Abstract());return(0);}
+		AnimClass * As_Anim(void) const {if (*this == RTTI_ANIM) return((AnimClass *)As_Abstract());return(0);}
+		TeamClass * As_Team(void) const {if (*this == RTTI_TEAM) return((TeamClass *)As_Abstract());return(0);}
+		InfantryClass * As_Infantry(void) const {if (*this == RTTI_INFANTRY) return((InfantryClass *)As_Techno());return(0);}
+		UnitClass * As_Unit(void) const {if (*this == RTTI_UNIT) return((UnitClass *)As_Techno());return(0);}
+		BuildingClass * As_Building(void) const {if (*this == RTTI_BUILDING) return((BuildingClass *)As_Techno());return(0);}
+		AircraftClass * As_Aircraft(void) const {if (*this == RTTI_AIRCRAFT) return((AircraftClass *)As_Techno());return(0);}
+		VesselClass * As_Vessel(void) const {if (*this == RTTI_VESSEL) return((VesselClass *)As_Techno());return(0);}
+};
+
+/*
+**	This class only serves as a wrapper to the xTargetClass. This class must not define any members except
+**	for the constructors. This is because the xTargetClass is used in a union and this target object is
+**	used as its initializer. If this class had any extra members they would not be properly copied and
+**	communicated to the other machines in a network/modem game. Combining this class with xTargetClass would
+**	be more efficient, but Watcom doesn't allow class objects that have a constructor to be part of a union [even
+**	if the class object has a default constructor!].
+*/
+class TargetClass : public xTargetClass
+{
+	public:
+
+		TargetClass(void) {Invalidate();}
+		TargetClass(NoInitClass const &) {}
+		TargetClass(RTTIType rtti, int id) {
+			Target.Sub.Exponent = rtti;
+			Target.Sub.Mantissa = id;
+		}
+		TargetClass(CELL cell) {
+			Target.Sub.Exponent = RTTI_CELL;
+			Target.Sub.Mantissa = cell;
+		}
+		TargetClass(TARGET target);
+		TargetClass(AbstractClass const * ptr);
+		TargetClass(AbstractTypeClass const * ptr);
+		TargetClass(CellClass const * ptr);
+};
+
+#endif
