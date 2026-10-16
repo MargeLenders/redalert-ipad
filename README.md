@@ -130,8 +130,8 @@ Ensure full **Xcode** (not just Command Line Tools) is installed from the Mac Ap
 
 1. **Mount both disc images** by double-clicking them in Finder, or via terminal:
    ```bash
-   hdiutil mount /path/to/CD1_ALLIED_DISC.ISO
-   hdiutil mount /path/to/CD2_SOVIET_DISC.ISO
+   hdiutil mount /path/to/CD1_ALLIED_DISC.ISO (or drag the iso file to the terminal window)
+   hdiutil mount /path/to/CD2_SOVIET_DISC.ISO (or drag the iso file to the terminal window)
    ```
    *(They will appear under `/Volumes/CD1` or `/Volumes/REDALERT` and `/Volumes/CD2`).*
 
@@ -157,8 +157,7 @@ Ensure full **Xcode** (not just Command Line Tools) is installed from the Mac Ap
 You can install and run the game using a **free personal Apple ID** (no paid \$99/year developer membership required).
 
 1. **Find your Apple Development Team ID**:
-   * In Xcode: Open **Settings** (`Cmd + ,`) $\rightarrow$ **Accounts** $\rightarrow$ select your Apple ID $\rightarrow$ **Manage Certificates** (your 10-character Team ID is shown next to your name).
-   * Or view it at [developer.apple.com/account](https://developer.apple.com/account).
+   * At [developer.apple.com/account](https://developer.apple.com/account), look for Team ID (a 10-character Team ID).
 
 2. **Compile the optimized Release build for device**:
    ```bash
@@ -166,7 +165,9 @@ You can install and run the game using a **free personal Apple ID** (no paid \$9
    ```
    *(Replace `YOUR_TEAM_ID` with your 10-character Team ID).*
 
-3. **Deploy with Xcode**:
+   It will take a while, go grab a coffee.
+
+4. **Deploy with Xcode**:
    * Connect your iPad to your Mac via USB and tap **Trust This Computer** on the iPad screen.
    * Open the generated Xcode project:
      ```bash
@@ -175,7 +176,7 @@ You can install and run the game using a **free personal Apple ID** (no paid \$9
    * In Xcode's top toolbar, select your connected iPad as the run destination.
    * Press **Run** (`Cmd + R`). Xcode will sign the app, embed the prepared game data, and install it on your iPad.
 
-4. **Enable Developer Mode & Trust Certificate on iPad**:
+5. **Enable Developer Mode & Trust Certificate on iPad**:
    * On iPadOS 16/17+: Go to **Settings $\rightarrow$ Privacy & Security $\rightarrow$ Developer Mode**, turn it **On**, and reboot the iPad.
    * Go to **Settings $\rightarrow$ General $\rightarrow$ VPN & Device Management**, tap your Apple ID under *Developer App*, and tap **Trust**.
    * Launch **Red Alert** from your iPad home screen and enjoy!
