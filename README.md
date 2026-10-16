@@ -25,11 +25,11 @@ This fork extends the port into a first-class tablet experience with **native iP
   * **1-Finger Drag (Rubber-Band)**: Box-select multiple combat units simultaneously with a visual green selector rectangle.
   * **2-Finger Tap**: Native Right-Click (cancel movement orders, deselect units, abort building placement, or toggle sell/repair mode).
   * **2-Finger Drag**: Smooth battlefield camera panning in any direction.
-  * **Authentic 1996 Tactical HUD Dock (Bottom-Left Corner)**:
+  * **Authentic 1996 Tactical HUD Dock (leafy side of the screen)**:
     * **`CTRL` (Force Attack)**: Toggle force-attack mode to target ground, bridges, or friendly units. Features an active amber indicator lamp.
     * **`1`, `2`, `3`, `4` (Combat Teams)**: Quick-tap to select assigned combat groups (double-tap centers the camera). Long-press (400ms) assigns selected units to that group (like desktop `Ctrl + 1..4`), verified with a green LED indicator.
     * **`KEY` (Virtual Keyboard)**: Toggles the system on-screen keyboard for text input, saves, and cheats.
-    * **`▲` / `▼` (Collapse Arrow)**: Minimizes the HUD dock into a tiny unobtrusive corner button to free up screen real estate.
+    * **`▲` / `▼` (Collapse Arrow)**: Minimizes the HUD dock into a tiny unobtrusive button to free up screen real estate.
 * **⚡ Hardware-Accelerated Graphics**:
   * Native SDL2 video backend using GPU-accelerated rendering at native display resolution.
   * Automatic 4:3 aspect ratio correction with integer scaling and pillarboxing.
@@ -49,8 +49,6 @@ This fork extends the port into a first-class tablet experience with **native iP
 ┌────────────────────────────────────────────────────────┐
 │             Platform Host Layer                        │
 │   • iPadOS: UIKit, UIScene, borderless landscape       │
-│   • macOS: Cocoa / AppKit native windowing             │
-│   • Linux: X11 / Wayland desktop windowing             │
 └──────────────────────────┬─────────────────────────────┘
                            │
                            ▼
@@ -154,36 +152,7 @@ Ensure full **Xcode** (not just Command Line Tools) is installed from the Mac Ap
 
 ---
 
-### Step 4: Build and Play Natively on macOS
-
-```bash
-# Configure and build with Ninja
-cmake -S . -B build -G Ninja
-cmake --build build --target redalert_mac -j 8
-
-# Launch the game
-scripts/run_mac_dev.sh --no-build
-```
-
-* **Fullscreen shortcut**: Press `Cmd + Return` anytime, or launch with `RA_FULLSCREEN=1 scripts/run_mac_dev.sh`.
-
----
-
-### Step 5: Test on the iOS Simulator
-
-To test the touch controls on your Mac before touching a real device:
-
-```bash
-# Build the simulator app
-scripts/build_ios_debug.sh
-
-# Boot the simulator in landscape and launch Red Alert
-scripts/run_ios_simulator.sh --no-build
-```
-
----
-
-### Step 6: Install on Your Physical iPad or iPhone
+### Step 4: Install on Your iPad
 
 You can install and run the game using a **free personal Apple ID** (no paid \$99/year developer membership required).
 
@@ -227,37 +196,6 @@ You can install and run the game using a **free personal Apple ID** (no paid \$9
 | **HUD: `KEY`** | **Virtual Keyboard** | Shows/hides the on-screen keyboard for typing names, saves, or cheats. |
 | **HUD: `▲` / `▼`** | **Collapse HUD** | Minimizes the dock to a compact corner button for maximum screen view. |
 | **External Mouse** | **Native Pointer** | Works seamlessly with Bluetooth mice, trackpads, and Magic Keyboards. |
-
----
-
-## 🐧 Linux Desktop Setup (Ubuntu)
-
-```bash
-# 1. Install dependencies
-sudo apt-get update
-sudo apt-get install -y build-essential cmake ninja-build pkg-config libsdl2-dev
-
-# 2. Build executable
-cmake -S . -B build-linux -G Ninja
-cmake --build build-linux --target redalert_linux -j 8
-
-# 3. Prepare assets (with mounted ISOs)
-scripts/prepare_assets_from_local.sh --allies /tmp/allies --soviet /tmp/soviet
-
-# 4. Launch
-scripts/run_linux_dev.sh --no-build
-```
-
----
-
-## 🤖 Android Debug Setup
-
-1. Install Android Studio with NDK `28.2.13676358` and platform-tools.
-2. Build and launch:
-   ```bash
-   scripts/build_android_debug.sh
-   scripts/run_android_debug.sh --no-build
-   ```
 
 ---
 
