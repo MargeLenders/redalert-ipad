@@ -1,4 +1,4 @@
-# 🪖 Command & Conquer: Red Alert (1996) — Native Port for iPadOS, macOS & Linux
+# 🪖 Command & Conquer: Red Alert (1996) — Native Port for iPadOS
 
 [![Platform](https://img.shields.io/badge/Platform-iPadOS%2016%2B%20%7C%20macOS%2012%2B%20%7C%20Linux%20%7C%20Android-blue.svg)](https://github.com/MargeLenders/redalert-ipad)
 [![Architecture](https://img.shields.io/badge/Architecture-ARM64%20(Apple%20Silicon)%20%7C%20x86__64-orange.svg)](https://github.com/MargeLenders/redalert-ipad)
@@ -10,7 +10,7 @@
 
 > 📖 *Leer en [Español](README.es.md)*
 
-A high-performance native source port of Westwood Studios' legendary real-time strategy game **Command & Conquer: Red Alert (1996)**, running natively on **iPadOS (iPad), macOS (Apple Silicon & Intel), Linux (Ubuntu), and Android**.
+A high-performance native source port of Westwood Studios' legendary real-time strategy game **Command & Conquer: Red Alert (1996)**, running natively on **iPadOS (iPad)**.
 
 This project is a downstream fork of [`dk8827/ra-port`](https://github.com/dk8827/ra-port), which modernized the original C++ codebase released by Electronic Arts under GPLv3 (<https://github.com/electronicarts/CnC_Red_Alert>).
 
